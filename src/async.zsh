@@ -56,9 +56,12 @@ _zsh_autosuggest_async_request() {
 _zsh_autosuggest_async_response() {
 	emulate -L zsh
 
+	local suggestion
+	IFS='' read -rd '' -u $1 suggestion
+
 	if [[ -z "$2" || "$2" == "hup" ]]; then
 		# Read everything from the fd and give it as a suggestion
-		zle autosuggest-suggest -- "$(cat <&$1)"
+		zle autosuggest-suggest -- "$suggestion"
 
 		# Close the fd
 		exec {1}<&-
