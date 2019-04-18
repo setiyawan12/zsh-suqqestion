@@ -28,6 +28,11 @@ _zsh_autosuggest_capture_completion_widget() {
 	# after autosuggestions is initialized.
 	zle -- ${(k)widgets[(r)completion:.complete-word:_main_complete]}
 
+	# Don't do any cr/lf transformations. We need to do this immediately before
+	# output because if we do it in setup, onlcr will be re-enabled when we
+	# enter vared in the async code path.
+	stty -onlcr -ocrnl < /dev/tty
+
 	# The completion has been added, print the buffer as the suggestion
 	echo -nE - $'\0'$BUFFER$'\0'
 }
