@@ -40,6 +40,7 @@ _zsh_autosuggest_capture_setup() {
 	# before it. Here we set up a zsh exit hook to SIGKILL the zpty
 	# process immediately, before it has a chance to kill any other
 	# zpty processes.
+	autoload -Uz is-at-least
 	if ! is-at-least 5.4; then
 		zshexit() {
 			kill -KILL $$
